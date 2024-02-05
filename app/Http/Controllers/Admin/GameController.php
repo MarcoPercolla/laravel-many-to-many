@@ -45,7 +45,7 @@ class GameController extends Controller
         $newGame->save();
 
         if ($request->tags) {
-            $newGame->tags()->attach($request->tags);
+            $newGame->tags()->sync($request->tags);
         }
 
         // return redirect()->route("admin.games.show", $newGame->id);
@@ -81,7 +81,7 @@ class GameController extends Controller
 
         $game->fill($validati);
         if ($request->tags) {
-            $game->tags()->attach($request->tags);
+            $game->tags()->sync($request->tags);
         }
         $game->update();
 

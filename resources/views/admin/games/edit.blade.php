@@ -3,7 +3,8 @@
 @section('content')
 <div class="container-fluid mt-4">
     <div class="row justify-content-center">
-        <h2>{{ $game->tags}}</h2>
+        <h2>Modifica</h2>
+        
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -47,9 +48,18 @@
             <div class="mb-3">
                 <label for="tags" class="form-label">seleziona i tag associati</label>
                 <select multiple name="tags[]" id="tags" class="form-select">
+                    {{-- @php 
+                    $game_tag_ids = array_map(function($game_tag){
+                        return $game_tag["id"];
+
+                    },
+                    $game->tags->toArray());
                     
+                    @endphp --}}
                     @foreach ($tags as $tag)
-                        @if (in_array($tag, $game->tags->toArray()))
+                    
+                        {{-- @if (in_array($tag->id, $game_tag_ids)) --}}
+                        @if ($game->tags->contains($tag))
                             <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
                         @else
                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
