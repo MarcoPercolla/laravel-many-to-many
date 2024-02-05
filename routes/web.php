@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController; //<---- Import del controller precedentemente creato!
 use App\Http\Controllers\Admin\GameController;
+use App\Http\Controllers\Admin\TagController;
 use App\Models\Game;
 
 Route::get('/', function () {
@@ -26,6 +27,7 @@ Route::middleware(['auth'])
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::resource("game", GameController::class);
+        Route::resource('tags', TagController::class);
     });
 
 require __DIR__ . '/auth.php';

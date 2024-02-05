@@ -14,7 +14,7 @@ class Game extends Model
         "description",
         "thumb",
         "category_id",
-        "tag_id",
+
     ];
 
     public function category()
