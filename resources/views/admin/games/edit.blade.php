@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid mt-4">
     <div class="row justify-content-center">
-        <h2>Nuovo gioco</h2>
+        <h2>{{ $game->tags}}</h2>
         @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -35,6 +35,30 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="mb-3">
+                <label for="category_id" class="form-label">seleziona una categoria</label>
+                <select name="category_id" id="category_id" class="form-select">
+                    <option selected value="{{ $game->category->id }}">{{ $game->category->name }}</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="tags" class="form-label">seleziona i tag associati</label>
+                <select multiple name="tags[]" id="tags" class="form-select">
+                    
+                    @foreach ($tags as $tag)
+                        @if (in_array($tag, $game->tags->toArray()))
+                            <option selected value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @else
+                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endif
+                        
+                    @endforeach
+                </select>
+            </div>
+            
             <button type="submit" class="btn btn-primary">Inserisci</button>
         </form>
     </div>
