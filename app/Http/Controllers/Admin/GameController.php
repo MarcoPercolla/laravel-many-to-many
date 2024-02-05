@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use App\Models\Tag;
+use App\Models\Category;
 use App\Http\Requests\StoreGameRequest;
 
 use App\Http\Requests\UpdateGameRequest;
@@ -16,7 +18,8 @@ class GameController extends Controller
     public function index()
     {
         $games = Game::all();
-        return view("admin.games.index", compact("games"));
+        $tags = Tag::all();
+        return view("admin.games.index", compact("games", "tags"));
     }
 
     /**
@@ -24,7 +27,10 @@ class GameController extends Controller
      */
     public function create()
     {
-        return view("admin.games.create");
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view("admin.games.create", compact("categories", "tags"));
     }
 
     /**
@@ -37,6 +43,10 @@ class GameController extends Controller
         $newGame = new Game();
         $newGame->fill($validati);
         $newGame->save();
+
+        if ($request->tags) {
+            $newGame->tags()->attach($request->tags);
+        }
 
         // return redirect()->route("admin.games.show", $newGame->id);
         return redirect()->route("admin.game.index");
@@ -55,7 +65,9 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        return view("admin.games.edit", compact("game"));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view("admin.games.edit", compact("game", "categories", "tags"));
     }
 
     /**
@@ -68,7 +80,11 @@ class GameController extends Controller
 
 
         $game->fill($validati);
+        if ($request->tags) {
+            $game->tags()->attach($request->tags);
+        }
         $game->update();
+
         return redirect()->route("admin.game.index");
     }
 

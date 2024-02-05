@@ -11,11 +11,11 @@ class Tag extends Model
 
     protected $fillable = [
         "name",
-        "description"
+
     ];
 
     public function games()
     {
-        return $this->hasMany(Game::class);
+        return $this->belongsToMany(Game::class);
     }
 }

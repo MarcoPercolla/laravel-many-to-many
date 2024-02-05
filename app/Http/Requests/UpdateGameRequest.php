@@ -24,7 +24,9 @@ class UpdateGameRequest extends FormRequest
         return [
             "title" => ["min:5", "max:50"],
             "description" => ["required", "min:5", "max:300"],
-            "thumb" => ["required", "min:2", "max:150"]
+            "thumb" => ["required", "min:2", "max:150"],
+            "category_id" => ["nullable", "exists:categories,id"],
+            "tags" => ["exists:tags,id"],
         ];
     }
 }
